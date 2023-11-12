@@ -1,0 +1,30 @@
+:root {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    display: grid;
+    grid-template-rows: 1fr 10fr 1fr;
+    font-family: Inter, sans-serif;
+}
+
+header {
+    background-color: #E6AA68;
+    display: flex;
+    justify-content: center;
+}
+
+header h1 {
+    color: #02020B;
+    text-shadow: 1px 1px 2px #D36135;
+}
+
+main {
+    background-color: #ECE4B7;
+}
+
+footer {
+    background-color: #E6AA68;
+    
+}
