@@ -7,17 +7,41 @@ function Book(title, author, pages, read) {
     this.read = read
 }
 
-Book.prototype.info = function() {
-    function read(){
-        if (this.read === true) {
-            return 'not read yet.'
-        } else return 'has been read.'
-    }
-    let readPhrase = read()
-    return `${this.title} by ${this.author}, ${this.pages}, ${readPhrase}`
-}
+
 
 function addBookToLibrary (title, author, pages, read) {
     const book = new Book(title,author, pages, read)
     myLibrary.push(book)
 }
+
+addBookToLibrary('Book1','Author1',222,false)
+
+function initLibraryCards () {
+    myLibrary.forEach((item) => {
+        function hasRead(){
+            if (this.read === true) {
+                return 'not read yet.'
+            } else return 'has been read.'
+        }
+        let readPhrase = hasRead()
+        const container = document.querySelector('.card-container')
+        const card = document.createElement('div')
+        card.classList.add('card')
+        const title = document.createElement('h3')
+        const author = document.createElement('p')
+        const pages = document.createElement('p')
+        const read = document.createElement('p')
+        title.textContent = item.title
+        author.textContent = item.author
+        pages.textContent = item.pages
+        read.textContent = readPhrase
+        card.appendChild(title)
+        card.appendChild(author)
+        card.appendChild(pages)
+        card.appendChild(read)
+        container.appendChild(card)
+    })
+}
+
+initLibraryCards()
+

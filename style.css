@@ -7,6 +7,7 @@ body {
     display: grid;
     grid-template-rows: 1fr 10fr 1fr;
     font-family: Inter, sans-serif;
+    color: #02020B;
 }
 
 header {
@@ -16,12 +17,27 @@ header {
 }
 
 header h1 {
-    color: #02020B;
     text-shadow: 1px 1px 2px #D36135;
 }
 
 main {
     background-color: #ECE4B7;
+    display: flex;
+    justify-content: center;
+}
+
+.card-container {
+    align-self: center;
+    display: grid;
+    grid-auto-flow: column;
+    gap: 16px;
+}
+
+.card {
+    background-color: #E6AA68;
+    padding: 8px;
+    min-width: 200px;
+    min-height: 200px;
 }
 
 footer {
