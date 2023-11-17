@@ -51,14 +51,48 @@ main {
     min-height: 200px;
 }
 
+dialog {
+    background-color: #E6AA68;
+    border-style: none;
+    border-radius: 4px;
+}
+
+dialog fieldset {
+    display: grid;
+    border-style: none;
+}
+
+dialog fieldset > * {
+    margin: 4px;
+}
+
+dialog fieldset input {
+    padding: 4px;
+}
+
+dialog fieldset input,
+dialog button {
+    border-style: none;
+}
+
+dialog button {
+    border-radius: 6px;
+    background-color: #D36135;
+    color: white;
+    padding: 8px;
+}
+
+
+.error {
+    color: white;
+    background-color: rgb(149, 47, 47);
+    border-radius: 4px;
+    display: none;
+}
+
 footer {
     background-color: #E6AA68;
     
 }
 
-.error {
-    color: white;
-    background-color: rgb(149, 47, 47);
-    border-radius: 1px 1px 4px 4px;
-    display: none;
-}
+
