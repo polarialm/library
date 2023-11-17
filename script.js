@@ -45,3 +45,46 @@ function initLibraryCards () {
 
 initLibraryCards()
 
+const plus = document.querySelector('#plus-btn')
+const dialog = document.querySelector('dialog')
+
+plus.addEventListener('click', function () {
+    dialog.showModal()
+})
+
+const submit_button = document.querySelector('#submit-button')
+const inputs = document.querySelectorAll('input')
+
+function plusNewBook (title, author, pages, read) {
+    const card_container = document.querySelector('.card-container')
+    card_container.innerHTML = ''
+    addBookToLibrary(title, author, pages, read)
+    initLibraryCards()
+}
+
+submit_button.addEventListener("click", (event) => {
+    inputs.forEach((item) => {
+        if (item.validity.valid === false) {
+            const errors = document.querySelectorAll(".error")
+            errors.forEach((eitem) => {
+                if (eitem.dataset.errorTarget === item.name) {
+                    eitem.style.display = "block"
+                }
+            })
+            throw new Error('bad')
+        }
+    })
+    const title = document.getElementById('title').value
+    const author = document.getElementById('author').value
+    const pages = document.getElementById('pages').value
+    const read = document.getElementById('read').value 
+    plusNewBook(title, author, pages, read)
+    event.preventDefault()
+})
+
+const close_button = document.getElementById('close')
+
+close_button.addEventListener("click", (event) => {
+    dialog.close()
+})
+

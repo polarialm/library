@@ -10,8 +10,36 @@
     <title>Library</title>
 </head>
 <body>
+    <dialog>
+        <form action="">
+            <fieldset>
+                <legend>Add a new book</legend>
+                <label for="title">Title</label>
+                <input type="text" name="title" id="title" required>
+                <div class="error" data-error-target="title">Enter a valid title.</div>
+    
+                <label for="author">Author</label>
+                <input type="text" name="author" id="author" required>
+                <div class="error" data-error-target="author">Enter a valid author's name.</div>
+    
+                <label for="pages">Pages</label>
+                <input type="text" name="pages" id="pages" pattern="[0-9]+" required>
+                <div class="error" data-error-target="pages">Enter a valid number of pages.</div>
+
+                <label for="read">Read</label>
+                <input type="checkbox" name="read" id="read">
+            </fieldset>
+            <button type="submit" id="submit-button">Submit</button>
+            <button id="close">Close</button>
+        </form>
+    </dialog>
     <header>
-        <h1>The Library</h1>
+        <div class="logo">
+            <h1>The Library</h1>
+        </div>
+        <div id="plus">
+            <button id="plus-btn"><h1>+</h1></button>
+        </div>
     </header>
     <main>
         <div class="card-container">

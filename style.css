@@ -13,12 +13,23 @@ body {
 header {
     background-color: #E6AA68;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    padding: 0px 16px 0px 16px;
 }
 
-header h1 {
+.logo h1 {
     text-shadow: 1px 1px 2px #D36135;
 }
+
+#plus button {
+    background-color: rgba(255, 0, 0, 0);
+    border-style: none;
+}
+
+#plus h1 {
+    color: #D36135;
+}
+
 
 main {
     background-color: #ECE4B7;
@@ -43,4 +54,11 @@ main {
 footer {
     background-color: #E6AA68;
     
+}
+
+.error {
+    color: white;
+    background-color: rgb(149, 47, 47);
+    border-radius: 1px 1px 4px 4px;
+    display: none;
 }
