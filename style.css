@@ -51,6 +51,18 @@ main {
     min-height: 200px;
 }
 
+.top {
+    display: flex;
+    justify-content: space-between;
+}
+
+.remove {
+    color: rgb(126, 16, 16);
+    background-color: rgba(0, 0, 0, 0);
+    border-style: none;
+    font-weight: bold;
+}
+
 dialog {
     background-color: #E6AA68;
     border-style: none;

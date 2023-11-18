@@ -1,4 +1,22 @@
-const myLibrary = []
+let myLibrary = []
+
+let selectedRemoves
+
+function removeBook (button) {
+    const card = button.closest('.card')
+    myLibrary = myLibrary.filter((item, index) => {
+        return item !== myLibrary[card.dataset.bookIndex]
+    })
+    initLibraryCards()
+}
+
+function attachListener2Removers () {
+    selectedRemoves.forEach((item) => {
+        item.addEventListener("click", (event) => {
+            removeBook(item)
+        })
+    })
+}
 
 function Book(title, author, pages, read) {
     this.title = title
@@ -6,8 +24,6 @@ function Book(title, author, pages, read) {
     this.pages = pages
     this.read = read
 }
-
-
 
 function addBookToLibrary (title, author, pages, read) {
     const book = new Book(title,author, pages, read)
@@ -17,17 +33,26 @@ function addBookToLibrary (title, author, pages, read) {
 addBookToLibrary('Book1','Author1',222,false)
 
 function initLibraryCards () {
-    myLibrary.forEach((item) => {
+    const container = document.querySelector('.card-container')
+    container.innerHTML = ""
+    myLibrary.forEach((item, index) => {
         function hasRead(){
             if (this.read === true) {
                 return 'not read yet.'
             } else return 'has been read.'
         }
         let readPhrase = hasRead()
-        const container = document.querySelector('.card-container')
         const card = document.createElement('div')
         card.classList.add('card')
+        const top = document.createElement('div')
+        top.classList.add('top')
+        const remove = document.createElement('button')
+        remove.classList.add('remove')
+        remove.setAttribute('type', 'button')
+        remove.appendChild(document.createTextNode('X'))
         const title = document.createElement('h3')
+        top.appendChild(title)
+        top.appendChild(remove)
         const author = document.createElement('p')
         const pages = document.createElement('p')
         const read = document.createElement('p')
@@ -35,11 +60,14 @@ function initLibraryCards () {
         author.textContent = item.author
         pages.textContent = item.pages
         read.textContent = readPhrase
-        card.appendChild(title)
+        card.appendChild(top)
         card.appendChild(author)
         card.appendChild(pages)
         card.appendChild(read)
+        card.setAttribute('data-book-index', `${index}`)
         container.appendChild(card)
+        selectedRemoves = document.querySelectorAll('.remove')
+        attachListener2Removers()
     })
 }
 
@@ -87,4 +115,7 @@ const close_button = document.getElementById('close')
 close_button.addEventListener("click", (event) => {
     dialog.close()
 })
+
+
+
 
