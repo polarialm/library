@@ -4,8 +4,10 @@ let selectedRemoves
 
 function removeBook (button) {
     const card = button.closest('.card')
-    myLibrary = myLibrary.filter((item, index) => {
-        return item !== myLibrary[card.dataset.bookIndex]
+    myLibrary.forEach((item, index) => {
+        if (index === Number(card.getAttribute('data-book-index'))) {
+            myLibrary.splice(index,1)
+        }
     })
     initLibraryCards()
 }
@@ -30,7 +32,6 @@ function addBookToLibrary (title, author, pages, read) {
     myLibrary.push(book)
 }
 
-addBookToLibrary('Book1','Author1',222,false)
 
 function initLibraryCards () {
     const container = document.querySelector('.card-container')
@@ -69,6 +70,7 @@ function initLibraryCards () {
         selectedRemoves = document.querySelectorAll('.remove')
         attachListener2Removers()
     })
+    }
 }
 
 initLibraryCards()
