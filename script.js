@@ -36,6 +36,9 @@ function addBookToLibrary (title, author, pages, read) {
 function initLibraryCards () {
     const container = document.querySelector('.card-container')
     container.innerHTML = ""
+    if (myLibrary.length === 0) {
+        
+    } else {
     myLibrary.forEach((item, index) => {
         function hasRead(){
             if (this.read === true) {
