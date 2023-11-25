@@ -15,10 +15,15 @@ function removeBook (button) {
 
 
 function Book(title, author, pages, read) {
+    function readPhrase() {
+        if (read === true) {
+            return 'has been read.'
+        } else return 'has not been read yet.'
+    }
     this.title = title
     this.author = author
     this.pages = pages
-    this.read = read
+    this.read = readPhrase()
 }
 
 function addBookToLibrary (title, author, pages, read) {
@@ -30,17 +35,10 @@ function addBookToLibrary (title, author, pages, read) {
 function initLibraryCards () {
     const container = document.querySelector('.card-container')
     container.innerHTML = ""
-    console.log(container.innerHTML)
     if (myLibrary.length === 0) {
         
     } else {
     myLibrary.forEach((item, index) => {
-        function hasRead(){
-            if (this.read === true) {
-                return 'not read yet.'
-            } else return 'has been read.'
-        }
-        let readPhrase = hasRead()
         const card = document.createElement('div')
         card.classList.add('card')
         const top = document.createElement('div')
@@ -59,7 +57,7 @@ function initLibraryCards () {
         title.textContent = item.title
         author.textContent = item.author
         pages.textContent = item.pages
-        read.textContent = readPhrase
+        read.textContent = item.read
         card.appendChild(top)
         card.appendChild(author)
         card.appendChild(pages)
@@ -107,7 +105,7 @@ submit_button.addEventListener("click", (event) => {
     const title = document.getElementById('title').value
     const author = document.getElementById('author').value
     const pages = document.getElementById('pages').value
-    const read = document.getElementById('read').value 
+    const read = document.getElementById('read').checked
     plusNewBook(title, author, pages, read)
     event.preventDefault()
 })
