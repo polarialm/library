@@ -1,6 +1,4 @@
 let myLibrary = []
-let selectedRemoves
-let hasExecutedRemoval = false
 
 function removeBook (button) {
     const card = button.closest('.card')
@@ -15,7 +13,7 @@ function removeBook (button) {
 
 
 function Book(title, author, pages, read) {
-    function readPhrase() {
+    function generateReadPhrase() {
         if (read === true) {
             return 'has been read.'
         } else return 'has not been read yet.'
@@ -23,7 +21,7 @@ function Book(title, author, pages, read) {
     this.title = title
     this.author = author
     this.pages = pages
-    this.read = readPhrase()
+    this.readPhrase = generateReadPhrase()
 }
 
 function addBookToLibrary (title, author, pages, read) {
@@ -41,6 +39,8 @@ function initLibraryCards () {
         container.appendChild(text)
     } else {
     myLibrary.forEach((item, index) => {
+        /* In here, we essentially create every single element that is
+        supposed to be present in each book card.*/
         const card = document.createElement('div')
         card.classList.add('card')
         const top = document.createElement('div')
@@ -58,7 +58,7 @@ function initLibraryCards () {
         title.textContent = item.title
         author.textContent = item.author
         pages.textContent = item.pages
-        read.textContent = item.read
+        read.textContent = item.readPhrase
         card.appendChild(top)
         card.appendChild(author)
         card.appendChild(pages)
@@ -85,8 +85,6 @@ const submit_button = document.querySelector('#submit-button')
 const inputs = document.querySelectorAll('input')
 
 function plusNewBook (title, author, pages, read) {
-    const card_container = document.querySelector('.card-container')
-    card_container.innerHTML = ''
     addBookToLibrary(title, author, pages, read)
     initLibraryCards()
 }
