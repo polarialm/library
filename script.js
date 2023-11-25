@@ -49,7 +49,6 @@ function initLibraryCards () {
         remove.classList.add('remove')
         remove.setAttribute('type', 'button')
         remove.appendChild(document.createTextNode('X'))
-        // Attribute listener to remove!!!
         const title = document.createElement('h3')
         top.appendChild(title)
         top.appendChild(remove)

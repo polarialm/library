@@ -104,7 +104,11 @@ dialog button {
 
 footer {
     background-color: #E6AA68;
-    
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-
+footer a {
+    color: #02020B;
+}
