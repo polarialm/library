@@ -36,7 +36,9 @@ function initLibraryCards () {
     const container = document.querySelector('.card-container')
     container.innerHTML = ""
     if (myLibrary.length === 0) {
-        
+        const text = document.createElement('p')
+        text.textContent = 'Your library is empty. Try adding some books!'
+        container.appendChild(text)
     } else {
     myLibrary.forEach((item, index) => {
         const card = document.createElement('div')
