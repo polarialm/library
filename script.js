@@ -1,24 +1,18 @@
 let myLibrary = []
-
 let selectedRemoves
+let hasExecutedRemoval = false
 
 function removeBook (button) {
     const card = button.closest('.card')
-    myLibrary.forEach((item, index) => {
+    
+    for (let index = 0; index < myLibrary.length; index++) {
         if (index === Number(card.getAttribute('data-book-index'))) {
             myLibrary.splice(index,1)
         }
-    })
+    }
     initLibraryCards()
 }
 
-function attachListener2Removers () {
-    selectedRemoves.forEach((item) => {
-        item.addEventListener("click", (event) => {
-            removeBook(item)
-        })
-    })
-}
 
 function Book(title, author, pages, read) {
     this.title = title
@@ -36,6 +30,7 @@ function addBookToLibrary (title, author, pages, read) {
 function initLibraryCards () {
     const container = document.querySelector('.card-container')
     container.innerHTML = ""
+    console.log(container.innerHTML)
     if (myLibrary.length === 0) {
         
     } else {
@@ -54,6 +49,7 @@ function initLibraryCards () {
         remove.classList.add('remove')
         remove.setAttribute('type', 'button')
         remove.appendChild(document.createTextNode('X'))
+        // Attribute listener to remove!!!
         const title = document.createElement('h3')
         top.appendChild(title)
         top.appendChild(remove)
@@ -70,8 +66,9 @@ function initLibraryCards () {
         card.appendChild(read)
         card.setAttribute('data-book-index', `${index}`)
         container.appendChild(card)
-        selectedRemoves = document.querySelectorAll('.remove')
-        attachListener2Removers()
+        remove.addEventListener('click', (event) => {
+            removeBook(remove)
+        })
     })
     }
 }
