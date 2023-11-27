@@ -1,120 +1,126 @@
-let myLibrary = []
-
-function removeBook (button) {
-    const card = button.closest('.card')
-    
-    for (let index = 0; index < myLibrary.length; index++) {
-        if (index === Number(card.getAttribute('data-book-index'))) {
-            myLibrary.splice(index,1)
-        }
-    }
-    initLibraryCards()
-}
 
 
-function Book(title, author, pages, read) {
-    function generateReadPhrase() {
-        if (read === true) {
+let library = []
+
+const CONTAINER = document.querySelector('.card-container')
+
+cardContainerInit()
+
+function Book (title, author, pages, isReadChecked) {
+    function generateRead() {
+        if (isReadChecked) {
             return 'has been read.'
-        } else return 'has not been read yet.'
+        } else return 'has not been read'
     }
     this.title = title
     this.author = author
     this.pages = pages
-    this.readPhrase = generateReadPhrase()
+    this.read = generateRead()
 }
 
-function addBookToLibrary (title, author, pages, read) {
-    const book = new Book(title,author, pages, read)
-    myLibrary.push(book)
+function addBook(title,author,pages,read) {
+    const book = new Book(title, author, pages, read)
+    library.push(book)
 }
 
 
-function initLibraryCards () {
-    const container = document.querySelector('.card-container')
-    container.innerHTML = ""
-    if (myLibrary.length === 0) {
-        const text = document.createElement('p')
-        text.textContent = 'Your library is empty. Try adding some books!'
-        container.appendChild(text)
-    } else {
-    myLibrary.forEach((item, index) => {
-        /* In here, we essentially create every single element that is
-        supposed to be present in each book card.*/
-        const card = document.createElement('div')
-        card.classList.add('card')
-        const top = document.createElement('div')
-        top.classList.add('top')
-        const remove = document.createElement('button')
-        remove.classList.add('remove')
-        remove.setAttribute('type', 'button')
-        remove.appendChild(document.createTextNode('X'))
-        const title = document.createElement('h3')
-        top.appendChild(title)
-        top.appendChild(remove)
-        const author = document.createElement('p')
-        const pages = document.createElement('p')
-        const read = document.createElement('p')
-        title.textContent = item.title
-        author.textContent = item.author
-        pages.textContent = item.pages
-        read.textContent = item.readPhrase
-        card.appendChild(top)
-        card.appendChild(author)
-        card.appendChild(pages)
-        card.appendChild(read)
-        card.setAttribute('data-book-index', `${index}`)
-        container.appendChild(card)
-        remove.addEventListener('click', (event) => {
-            removeBook(remove)
-        })
-    })
+function removeBook(REMOVE_BUTTON) {
+    const CARD = REMOVE_BUTTON.closest('.card')
+    for (let index = 0; index < library.length; index++) {
+        if (index === Number(CARD.getAttribute('data-index'))) {
+            library.splice(index,1)
+        }
     }
 }
 
-initLibraryCards()
-
-const plus = document.querySelector('#plus-btn')
-const dialog = document.querySelector('dialog')
-
-plus.addEventListener('click', function () {
-    dialog.showModal()
-})
-
-const submit_button = document.querySelector('#submit-button')
-const inputs = document.querySelectorAll('input')
-
-function plusNewBook (title, author, pages, read) {
-    addBookToLibrary(title, author, pages, read)
-    initLibraryCards()
+function cardContainerInit() {
+    resetContainer(CONTAINER)
+    if (library.length < 1) {
+        emptyLibraryNotif(CONTAINER)
+    } else {
+        library.forEach((item, index) => {
+            cardCreation(item,index)
+        })
+    }
 }
 
-submit_button.addEventListener("click", (event) => {
-    inputs.forEach((item) => {
-        if (item.validity.valid === false) {
-            const errors = document.querySelectorAll(".error")
-            errors.forEach((eitem) => {
-                if (eitem.dataset.errorTarget === item.name) {
-                    eitem.style.display = "block"
-                }
-            })
-            throw new Error('bad')
-        }
+function resetContainer(container) {
+    container.innerHTML = ""
+}
+
+function emptyLibraryNotif(container) {
+    const TEXT = document.createElement('p')
+    TEXT.textContent = "Looks like you have no books in your library. Why don't you try adding some?"
+    container.appendChild(TEXT)
+}
+
+function cardCreation(item, index) {
+    const CARD = document.createElement('div')
+    CARD.classList.add('card')
+    CARD.setAttribute('data-index',index)
+    const CARD_HEADER = document.createElement('div')
+    CARD_HEADER.classList.add('card-header')
+    const TITLE = document.createElement('h3')
+    TITLE.textContent = item.title
+    const REMOVE_BUTTON = document.createElement('button')
+    REMOVE_BUTTON.setAttribute('type','button')
+    REMOVE_BUTTON.appendChild(document.createTextNode('X'))
+    REMOVE_BUTTON.classList.add('remove')
+    CARD_HEADER.appendChild(TITLE)
+    CARD_HEADER.appendChild(REMOVE_BUTTON)
+    const AUTHOR = document.createElement('p')
+    AUTHOR.textContent = item.author
+    const PAGES = document.createElement('p')
+    PAGES.textContent = item.pages
+    const READ_PHRASE = document.createElement('p')
+    READ_PHRASE.textContent = item.read
+    CARD.appendChild(CARD_HEADER)
+    CARD.appendChild(AUTHOR)
+    CARD.appendChild(PAGES)
+    CARD.appendChild(READ_PHRASE)
+    REMOVE_BUTTON.addEventListener('click', () => {
+        removeBook(REMOVE_BUTTON)
+        cardContainerInit()
     })
-    const title = document.getElementById('title').value
-    const author = document.getElementById('author').value
-    const pages = document.getElementById('pages').value
-    const read = document.getElementById('read').checked
-    plusNewBook(title, author, pages, read)
+    CONTAINER.appendChild(CARD)
+}
+
+const PLUS_SIGN = document.querySelector('#plus')
+const DIALOG = document.querySelector('dialog')
+
+PLUS_SIGN.addEventListener('click', () => {
+    DIALOG.showModal()
+})
+
+
+const INPUTS = document.querySelectorAll('input')
+const SUBMIT = document.querySelector('#submit-button')
+const CLOSE = document.querySelector('#close')
+
+CLOSE.addEventListener('click', () => {
+    DIALOG.close()
+})
+
+SUBMIT.addEventListener('click' , (event) => {
+    inputValidityCheck(INPUTS)
+    addBook(INPUTS[0].value, INPUTS[1].value, INPUTS[2].value, INPUTS[3].checked)
+    cardContainerInit()
     event.preventDefault()
 })
 
-const close_button = document.getElementById('close')
-
-close_button.addEventListener("click", (event) => {
-    dialog.close()
-})
-
-
-
+function inputValidityCheck(inputs) {
+    inputs.forEach((item) => {
+        const ERROR = document.querySelectorAll('.error')
+        if (item.validity.valid === false) {
+            ERROR.forEach((eitem) => {
+                if (eitem.dataset.errorTarget === item.name) {
+                    eitem.setAttribute('style', 'display: block;')
+                }
+            })
+            throw new Error('Invalid input.')
+        } else {
+            ERROR.forEach((eitem) => eitem.setAttribute('style', 'display: none;'))
+        }
+    })
+}
 
